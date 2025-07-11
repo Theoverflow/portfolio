@@ -16,11 +16,11 @@ export default function App() {
     <div className="relative min-h-screen font-mono text-[#1b950f] bg-[#f2fcee] overflow-hidden" style={{ position: "relative", zIndex: 10 }}>
       <div
         style={{
-          width: "100%",
-          height: "100%",
-          position: "absolute",
+          position: "fixed",
           top: 0,
           left: 0,
+          width: "100vw",
+          height: "100vh",
           zIndex: -1,
           pointerEvents: "auto",
         }}
