@@ -1,65 +1,77 @@
 import React from "react";
-import { DitherText } from "reactbit";
-import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import Dither from './blocks/Backgrounds/Dither/Dither';
 
-export default function Portfolio() {
+function Card({ title, description }) {
   return (
-    <div className="min-h-screen bg-[#f2fcee] text-[#1b950f] p-8 font-mono flex flex-col items-center justify-center gap-10">
-      <header className="text-center">
-        <DitherText size="3xl" color="#9999cc" style={{ fontWeight: 700 }}>
-          Théo Marini
-        </DitherText>
-        <p className="text-[#7c9971] mt-2 text-sm">
-          Creative Developer | Rust & Web | Embedded Systems | Cloud Architect
+    <div className="bg-[#f2fcee] border border-[#7c9971] shadow-md hover:shadow-xl transition duration-300 p-5">
+      <h2 className="text-xl font-semibold text-[#1b950f]">{title}</h2>
+      <p className="text-[#7c9971] mt-2 text-sm">{description}</p>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <div className="relative min-h-screen font-mono text-[#1b950f] bg-[#f2fcee] overflow-hidden" style={{ position: "relative", zIndex: 10 }}>
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          zIndex: -1,
+          pointerEvents: "auto",
+        }}
+      >
+        <Dither
+          waveColor={[0.35, 0.5, 0.7]}
+          disableAnimation={false}
+          enableMouseInteraction={true}
+          mouseRadius={0.1}
+          colorNum={6}
+          waveAmplitude={0.3}
+          waveFrequency={3}
+          waveSpeed={0.04}
+        />
+      </div>
+
+      <header className="text-center pt-24 px-4">
+        <h1 className="text-3xl font-bold text-[#9999cc]">Théo Marini</h1>
+        <p className="text-[#7c9971] mt-2 text-sm max-w-md mx-auto">
+          Crafting systems & ideas at the intersection of code, design, and reality.
         </p>
       </header>
 
-      <main className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl">
+      <main className="mt-20 px-4 grid gap-6 w-full max-w-4xl mx-auto">
         {[
           {
-            title: "Rust & WebAssembly",
-            description: "Building performant UI using Rust & WASM with Bevy.",
+            title: "Rust + WebAssembly",
+            description: "Minimal & high-performance UIs with a systems mind.",
           },
           {
-            title: "Embedded Systems",
-            description: "Designing reliable, low-latency firmware.",
+            title: "Embedded Art",
+            description: "Low-level code that behaves like poetry in motion.",
           },
           {
-            title: "Cloud Architecture",
-            description: "Multi-cloud, containerized systems with CI/CD.",
+            title: "Architecture as Narrative",
+            description: "Infra that tells a story: modular, reliable, expressive.",
           },
-          {
-            title: "Finance & Trading",
-            description: "Quantitative models, algorithmic strategies, and analytics.",
-          },
-          {
-            title: "Problem Solving",
-            description: "Systematic, creative solutions for complex challenges.",
-          },
-          {
-            title: "Event Planning",
-            description: "Bringing people together through curated experiences.",
-          },
-        ].map((card, index) => (
+        ].map((item, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: index * 0.1 }}
+            transition={{ delay: index * 0.2 }}
           >
-            <Card className="bg-[#f2fcee] border border-[#7c9971] hover:shadow-xl transition duration-300">
-              <CardContent className="p-6">
-                <DitherText size="xl" color="#1b950f">{card.title}</DitherText>
-                <p className="text-[#7c9971] mt-3 text-sm">{card.description}</p>
-              </CardContent>
-            </Card>
+            <Card title={item.title} description={item.description} />
           </motion.div>
         ))}
       </main>
 
-      <footer className="mt-12 text-xs text-[#7c9971]">
-        © {new Date().getFullYear()} Théo Marini. Crafted with creativity & code.
+      <footer className="mt-24 mb-10 text-center text-xs text-[#7c9971] px-4">
+        © {new Date().getFullYear()} Théo Marini — Portfolio of simplicity & synthesis.
       </footer>
     </div>
   );
