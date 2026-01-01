@@ -1,0 +1,48 @@
+export const meta = {
+  title: 'Quant Dashboard',
+  slug: 'quant-dashboard',
+  date: '2025-11-12',
+  tags: ['Finance', 'DataViz', 'React'],
+  featured: true,
+  summary: 'A low-latency analytics dashboard with streaming charts and robust observability.',
+  demo: 'https://example.com',
+  repo: 'https://github.com/example/quant-dashboard'
+};
+
+## Overview
+
+This project focuses on **fast, readable, high-signal UIs** for finance and engineering teams.
+
+- Streaming time series rendering
+- Snapshot/replay of market state
+- Observability: tracing, structured logs, performance budgets
+
+## Architecture
+
+```text
+Browser (React) -> API Gateway -> Stream Processor -> TSDB
+                     |               |
+                     |               -> Alerting
+                     -> Auth/RBAC
+```
+
+### Key techniques
+
+1. **Incremental rendering**: only update visible series.
+2. **Data decimation** for high zoom levels.
+3. **Backpressure** on websocket feeds.
+
+## Performance budget
+
+| Layer | Target |
+|------|--------|
+| First load | < 1.5s on mid-tier laptop |
+| Interaction | 60fps scroll/zoom |
+| Stream ingest | > 10k points/s |
+
+## What I’d do next
+
+- GPU-accelerated line rendering (WebGL)
+- Better anomaly surfacing (sparklines + summaries)
+- Offline mode with snapshot caching
+

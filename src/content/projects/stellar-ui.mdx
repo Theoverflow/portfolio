@@ -1,0 +1,37 @@
+export const meta = {
+  title: 'Stellar UI Kit',
+  slug: 'stellar-ui-kit',
+  date: '2025-08-01',
+  tags: ['Design Systems', 'TypeScript', 'DX'],
+  featured: true,
+  summary: 'A component system designed for consistency, speed, and accessibility across product teams.',
+  repo: 'https://github.com/example/stellar-ui'
+};
+
+## Why
+
+Building quickly is easy; **building consistently** is hard...
+
+<div className="my-6 rounded-2xl border border-white/10 bg-white/5 p-4">
+  <strong className="text-white">Principle:</strong>{' '}
+  <span className="text-white/70">Design tokens and accessibility should be the default, not the checklist.</span>
+</div>
+
+## Highlights
+
+- Token-driven theming
+- Keyboard-first interactions
+- Simple motion system (respects reduced motion)
+
+## Example: a tiny utility
+
+```ts
+export function clamp(n: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, n));
+}
+```
+
+## Notes
+
+This portfolio template uses a similar approach: small primitives (`Card`, `Tag`) + strong typography.
+MDX content stays editable and versioned in Git.

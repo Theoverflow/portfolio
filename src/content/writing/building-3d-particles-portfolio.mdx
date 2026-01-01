@@ -1,0 +1,64 @@
+export const meta = {
+  title: 'Building a 3D particles portfolio that stays fast',
+  slug: 'building-a-3d-particles-portfolio',
+  date: '2026-01-01',
+  tags: ['WebGL', 'Performance', 'UX'],
+  summary: 'A practical approach to a premium 3D background without turning the site into a space heater.'
+};
+
+## The trap
+
+3D backgrounds often fail for two reasons:
+
+1. They **steal input focus** and make the UI feel sluggish.
+2. They **burn GPU** even when nothing changes.
+
+This template avoids both.
+
+## Strategy
+
+### 1) Keep the UI DOM-first
+
+The canvas is:
+
+- `position: fixed` and behind everything
+- `pointerEvents: none`
+- optional (auto-fallback if WebGL is unavailable)
+
+### 2) Put motion in the shader
+
+Instead of updating thousands of points on the CPU every frame, the vertex shader does the drift.
+The only things we update at runtime are a few uniforms:
+
+- time
+- focus point
+- attraction strength
+
+### 3) Respect reduced motion
+
+When `prefers-reduced-motion` is enabled, the canvas renders once (static) and stops animating.
+
+## Example
+
+Here’s the core idea (simplified):
+
+```glsl
+vec3 drift = 0.25 * vec3(
+  sin(uTime * 0.60 + base.y * 1.40 + s * 6.2831),
+  sin(uTime * 0.80 + base.z * 1.20 + s * 4.2000),
+  sin(uTime * 0.70 + base.x * 1.60 + s * 2.1000)
+);
+
+vec3 toFocus = uFocus - base;
+float d = length(toFocus);
+float falloff = exp(-d * 0.85);
+vec3 attract = normalize(toFocus) * (uStrength * 1.15) * falloff;
+
+vec3 p = base + drift + attract;
+```
+
+## What to customize
+
+- Increase particle count to `12k` for desktop, decrease to `4k` for mobile.
+- Add *one* interaction: nav hover subtly shifts the focus point.
+- Use a calm palette. Let your content be the hero.
