@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-export type SceneKey = 'home' | 'work' | 'writing' | 'detail' | 'unknown';
+export type SceneKey = "home" | "work" | "writing" | "detail" | "unknown";
 
 export type Vec3 = readonly [number, number, number];
 
@@ -19,11 +19,11 @@ const ROUTE_FOCUS: Record<SceneKey, { focus: Vec3; strength: number }> = {
   work: { focus: [2.2, 0.8, -0.5], strength: 0.75 },
   writing: { focus: [-2.2, 0.8, -0.5], strength: 0.65 },
   detail: { focus: [0, 1.4, -1.0], strength: 1.0 },
-  unknown: { focus: [0, 0, 0], strength: 0.25 }
+  unknown: { focus: [0, 0, 0], strength: 0.25 },
 };
 
 export function SceneProvider({ children }: { children: React.ReactNode }) {
-  const [routeKey, setRouteKey] = React.useState<SceneKey>('home');
+  const [routeKey, setRouteKey] = React.useState<SceneKey>("home");
   const [hoverKey, setHoverKey] = React.useState<SceneKey | null>(null);
 
   const derived = React.useMemo(() => {
@@ -35,12 +35,12 @@ export function SceneProvider({ children }: { children: React.ReactNode }) {
     const focus: Vec3 = [
       base.focus[0] * 0.4 + hover.focus[0] * 0.6,
       base.focus[1] * 0.4 + hover.focus[1] * 0.6,
-      base.focus[2] * 0.4 + hover.focus[2] * 0.6
+      base.focus[2] * 0.4 + hover.focus[2] * 0.6,
     ];
 
     return {
       focus,
-      strength: Math.max(base.strength, hover.strength) * 0.9
+      strength: Math.max(base.strength, hover.strength) * 0.9,
     };
   }, [routeKey, hoverKey]);
 
@@ -50,16 +50,18 @@ export function SceneProvider({ children }: { children: React.ReactNode }) {
       strength: derived.strength,
       routeKey,
       setRouteKey,
-      setHoverKey
+      setHoverKey,
     }),
-    [derived.focus, derived.strength, routeKey]
+    [derived, routeKey]
   );
 
-  return <SceneContext.Provider value={value}>{children}</SceneContext.Provider>;
+  return (
+    <SceneContext.Provider value={value}>{children}</SceneContext.Provider>
+  );
 }
 
 export function useScene() {
   const ctx = React.useContext(SceneContext);
-  if (!ctx) throw new Error('useScene must be used within SceneProvider');
+  if (!ctx) throw new Error("useScene must be used within SceneProvider");
   return ctx;
 }
